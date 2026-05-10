@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_product_form_view_low_stock" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit.low.stocks.product.alert</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="alert_tag" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_list_view_low_stock" model="ir.ui.view">
+        <field name="name">product.product.list.inherit.low.stocks.product.alert</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="alert_state" column_invisible="True"/>
+            </xpath>
+            <list position="attributes">
+                <attribute name="decoration-danger">alert_state == True</attribute>
+            </list>
+        </field>
+    </record>
+    <record id="product_product_search_view_low_stock" model="ir.ui.view">
+        <field name="name">product.product.search.inherit.low.stocks.product.alert</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="before">
+                <filter
+                    string="Low Stock"
+                    name="low_stock_alert"
+                    domain="[('alert_state', '=', True)]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+</odoo>
